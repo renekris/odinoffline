@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/send-data" method="post">
+      <fieldset>
+        <legend>Contact</legend>
+
+        <ul>
+          <li>
+            <label for="name-id">Name: </label>
+            <input
+              type="text"
+              name="user_name"
+              id="name-id"
+              placeholder="John Doe"
+            />
+          </li>
+
+          <li>
+            <label for="email-id">Email: </label>
+            <input
+              type="email"
+              name="user_email"
+              id="email-id"
+              placeholder="renekrisPohlak@gmail.com"
+            />
+          </li>
+
+          <li>
+            <label for="message-id">Message: </label>
+            <textarea
+              name="user_message"
+              id="message-id"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </li>
+
+          <li>
+            <button type="submit">Continue!</button>
+          </li>
+        </ul>
+      </fieldset>
+    </form>
+  </body>
+</html>

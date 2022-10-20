@@ -1,0 +1,54 @@
+/* ADVANCED STYLING 1 */
+
+#first {
+    position: relative;
+    --left-position: 10%;
+}
+
+input[type="search"] {
+    width: var(--left-position);
+    height: 24px;
+    outline: none;
+    appearance: none;
+}
+
+input[type="search"]:hover,
+input[type="search"]:focus,
+input[type="search"]:active {
+    outline: solid 1px black;
+}
+
+input[type="search"] + div {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 0;
+    left: var(--left-position);
+    content: "";
+    background-image: url(/search-24px.png);
+}
+
+/* ADVANCED STYLING 2 */
+
+input[type="radio"] {
+    position: relative;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid black;
+    background-color: #ccc;
+}
+
+input[type="radio"]::before {
+    position: absolute;
+    font-family: monospace;
+    font-size: 1rem;
+    top: -0.2rem;
+    left: 0.13rem;
+    content: "X";
+    visibility: hidden;
+}
+
+input[type="radio"]:checked::before {
+    visibility: visible;
+}

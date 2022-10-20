@@ -1,0 +1,11 @@
+#fname:invalid,
+#lname:invalid,
+#email:invalid {
+    border: 2px red solid;
+}
+
+#fname:valid,
+#lname:valid,
+#email:valid {
+    border: 2px green solid;
+}

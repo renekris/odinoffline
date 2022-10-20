@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="index.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <fieldset>
+            <form action="/hell" method="post">
+                <ul>
+                    <li>
+                        <label for="user-email">
+                            Email:
+                            <input type="email" name="email" id="user-email" />
+                        </label>
+                    </li>
+                    <li>
+                        <label for="user-url">
+                            Website:
+                            <input type="url" name="url" id="user-url" />
+                        </label>
+                    </li>
+                    <li>
+                        <label for="user-num">
+                            Phone Number:
+                            <input type="tel" name="number" id="user-num" />
+                        </label>
+                    </li>
+                    <li>
+                        <label for="user-color">
+                            Favorite color:
+                            <input type="color" name="color" id="user-color" />
+                        </label>
+                    </li>
+                    <li>
+                        <button type="submit">Update preferences</button>
+                    </li>
+                </ul>
+            </form>
+        </fieldset>
+
+        <fieldset>
+            <form action="/hell" method="post">
+                <ul>
+                    <li>
+                        <label for="range">
+                            Please enter the number of invitations:
+                            <input
+                                type="range"
+                                name="invitations"
+                                id="range"
+                                step="1"
+                                min="0"
+                                max="5"
+                                value="0"
+                            />
+                        </label>
+                    </li>
+                    <li>
+                        <button type="submit">Update preferences</button>
+                    </li>
+                </ul>
+            </form>
+        </fieldset>
+    </body>
+</html>

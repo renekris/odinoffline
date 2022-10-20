@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <fieldset>
+            <legend>This is Other Controls 1</legend>
+
+            <form action="" method="post">
+                <ol>
+                    <li>
+                        <label for="user-name">
+                            Name:
+                            <input type="text" name="name" id="user-name" />
+                        </label>
+                    </li>
+                    <li>
+                        <label for="user-comment">
+                            Comment:
+                            <textarea
+                                name="comment"
+                                id="user-comment"
+                                cols="35"
+                                rows="10"
+                                placeholder="Give me your life story..."
+                            >
+                            </textarea>
+                        </label>
+                    </li>
+                    <li>
+                        <button type="submit">Submit</button>
+                    </li>
+                </ol>
+            </form>
+        </fieldset>
+
+        <fieldset>
+            <legend>This is Other Controls 2</legend>
+
+            <form action="" method="post">
+                <ol>
+                    <li>
+                        <label for="user-food">
+                            <select name="food" id="user-food">
+                                <optgroup label="Main Course">
+                                    <option value="salad">Salad</option>
+                                    <option value="curry">Curry</option>
+                                    <option value="pizza">Pizza</option>
+                                </optgroup>
+                                <optgroup label="Sides">
+                                    <option value="fajitas">Fajitas</option>
+                                    <option value="biscuits">Biscuits</option>
+                                    <option value="crisps">Crisps</option>
+                                    <option value="fruit">Fruit</option>
+                                    <option value="breadsticks">
+                                        Breadsticks
+                                    </option>
+                                </optgroup>
+                            </select>
+                        </label>
+                    </li>
+                    <li>
+                        <button type="submit">Submit</button>
+                    </li>
+                </ol>
+            </form>
+        </fieldset>
+
+        <fieldset>
+            <legend>This is Other Controls 3</legend>
+
+            <form action="" method="post">
+                <ol>
+                    <li>
+                        <label for="fav">
+                            Enter your favorite food:
+                            <input
+                                type="text"
+                                name="favorite"
+                                id="fav"
+                                list="food-list"
+                            />
+
+                            <datalist id="food-list">
+                                <optgroup label="Main Course">
+                                    <option>Salad</option>
+                                    <option>Curry</option>
+                                    <option>Pizza</option>
+                                </optgroup>
+                                <optgroup label="Sides">
+                                    <option>Fajitas</option>
+                                    <option>Biscuits</option>
+                                    <option>Crisps</option>
+                                    <option>Fruit</option>
+                                    <option>Breadsticks</option>
+                                </optgroup>
+                            </datalist>
+                        </label>
+                    </li>
+                    <li>
+                        <button type="submit">Send it!</button>
+                    </li>
+                </ol>
+            </form>
+        </fieldset>
+    </body>
+</html>
