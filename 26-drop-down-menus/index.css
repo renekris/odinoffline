@@ -1,0 +1,91 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ddd;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  background-color: black;
+}
+
+ul > li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#main-nav {
+  width: 100%;
+}
+
+#main-nav li {
+  flex: 1;
+}
+
+.nav-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 4rem;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-button:hover {
+  background-color: white;
+  color: black;
+}
+
+.drop-down-parent {
+  position: relative;
+}
+
+.drop-down {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0%;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: -1;
+}
+
+.drop-down li {
+  width: 100%;
+}
+
+.drop-down a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  height: 2rem;
+}
+
+.drop-down a:hover {
+  background-color: white;
+  color: black;
+}
+
+.drop-down-visible {
+  top: 100%;
+  opacity: 100;
+  transition: all 0.4s ease;
+}
