@@ -92,6 +92,17 @@ ul > li {
   z-index: 1 !important;
 }
 
+.left-to-middle {
+  animation-name: left-to-middle;
+  animation-duration: 0.3s;
+}
+
+.middle-to-right {
+  animation-name: middle-to-right;
+  animation-duration: 0.3s;
+  z-index: 1 !important;
+}
+
 @keyframes right-to-middle {
   from {
     right: -100%;
@@ -100,17 +111,6 @@ ul > li {
   to {
     right: 0;
     opacity: 100;
-  }
-}
-
-@keyframes middle-to-right {
-  from {
-    right: 0;
-    opacity: 100;
-  }
-  to {
-    right: -100%;
-    opacity: 0;
   }
 }
 
@@ -133,5 +133,16 @@ ul > li {
   to {
     left: 0;
     opacity: 100;
+  }
+}
+
+@keyframes middle-to-right {
+  from {
+    right: 0;
+    opacity: 100;
+  }
+  to {
+    right: -100%;
+    opacity: 0;
   }
 }

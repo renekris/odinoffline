@@ -17,8 +17,8 @@
   const elNavigation = Array.from(document.getElementsByClassName('button-left'))[0];
 
   // EVENT LISTENERS
-  elButtonLeft.addEventListener('click', () => slideMoveLeft());
-  elButtonRight.addEventListener('click', () => slideMoveRight());
+  elButtonLeft.addEventListener('click', () => slideMove('left'));
+  elButtonRight.addEventListener('click', () => slideMove('right'));
 
   createImages();
   initiateSlide();
@@ -54,20 +54,35 @@
   }
   //#endregion IMAGES
 
-  function slideMoveRight() {
-    elButtonRight.disabled = true;
-    let currentImageIndex = getCurrentImageIndex();
-    if (currentImageIndex === -1) currentImageIndex = 0;
-    let nextImageIndex = currentImageIndex + 1;
+  function slideMove(side) {
+    const currentImageIndex = getCurrentImageIndex();
+    const previousImageIndex = getPreviousImageIndex(currentImageIndex);
+    const nextImageIndex = getNextImageIndex(currentImageIndex);
 
+    elButtonRight.disabled = true;
+    elButtonLeft.disabled = true;
+    if (side === 'left') {
+      slideMoveLeft(currentImageIndex, previousImageIndex);
+    } else if (side === 'right') {
+      slideMoveRight(currentImageIndex, nextImageIndex);
+    }
+  }
+
+  function slideMoveLeft(currentImageIndex, previousImageIndex) {
+    elImageArray[currentImageIndex].dataset.active = false;
+    elImageArray[currentImageIndex].className = 'image middle-to-right';
+    elImageArray[currentImageIndex].addEventListener('animationend', (e) => endOfAnimation(e));
+
+    elImageArray[previousImageIndex].dataset.active = true;
+    elImageArray[previousImageIndex].classList.remove('invisible-image', 'middle-to-right');
+    elImageArray[previousImageIndex].classList.add('left-to-middle');
+  }
+
+  function slideMoveRight(currentImageIndex, nextImageIndex) {
     elImageArray[currentImageIndex].dataset.active = false;
     elImageArray[currentImageIndex].className = 'image middle-to-left';
-    elImageArray[currentImageIndex].addEventListener('animationend', (e) => endOfAnimation(e, elButtonRight));
+    elImageArray[currentImageIndex].addEventListener('animationend', (e) => endOfAnimation(e));
 
-    // avoid out of array index on the next image
-    if (nextImageIndex >= elImageArray.length) {
-      nextImageIndex = 0;
-    }
     elImageArray[nextImageIndex].dataset.active = true;
     elImageArray[nextImageIndex].classList.remove('invisible-image', 'middle-to-left');
     elImageArray[nextImageIndex].classList.add('right-to-middle');
@@ -79,8 +94,22 @@
     });
   }
 
-  function endOfAnimation(e, button) {
-    button.disabled = false;
+  function getNextImageIndex(currentIndex) {
+    let nextImageIndex = currentIndex + 1;
+    if (nextImageIndex >= elImageArray.length) nextImageIndex = 0;
+    return nextImageIndex;
+  }
+
+  function getPreviousImageIndex(currentIndex) {
+    let previousImageIndex = currentIndex - 1;
+    if (previousImageIndex < 0) previousImageIndex = elImageArray.length - 1;
+    return previousImageIndex;
+  }
+
+  function endOfAnimation(e) {
+    elButtonLeft.disabled = false;
+    elButtonRight.disabled = false;
+
     e.target.className = 'image invisible-image';
     e.target.removeEventListener('animationend', endOfAnimation);
   }
