@@ -21,10 +21,22 @@
   elButtonLeft.addEventListener('click', () => slideMove('left'));
   elButtonRight.addEventListener('click', () => slideMove('right'));
 
+  // AUTO SLIDE EVERY 5000ms
+  document.addEventListener('DOMContentLoaded', () => slideTimer(5000));
+
   createImages();
   initiateSlide();
   displayNavigation();
 
+
+  async function slideTimer(ms) {
+    while (true) {
+      await sleep(ms);
+      slideMove('right');
+    }
+  }
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   //#region IMAGES
   function createImage(source, title, alt) {
@@ -140,6 +152,7 @@
     // display the first image
     elImageArray[0].dataset.active = true;
     elImageArray[0].classList.remove('invisible-image');
+
   }
 
   function displayNavigation() {
