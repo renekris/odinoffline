@@ -1,6 +1,7 @@
 (() => {
   let imageArray = [];
   let elImageArray = [];
+  let elNavigationArray = [];
 
   class Image {
     constructor(source, title, alt) {
@@ -14,7 +15,7 @@
   const elButtonLeft = Array.from(document.getElementsByClassName('button-left'))[0];
   const elButtonRight = Array.from(document.getElementsByClassName('button-right'))[0];
   const elSlider = Array.from(document.getElementsByClassName('image-slider'))[0];
-  const elNavigation = Array.from(document.getElementsByClassName('button-left'))[0];
+  const elNavigation = Array.from(document.getElementsByClassName('navigation-dots'))[0];
 
   // EVENT LISTENERS
   elButtonLeft.addEventListener('click', () => slideMove('left'));
@@ -22,6 +23,7 @@
 
   createImages();
   initiateSlide();
+  displayNavigation();
 
 
   //#region IMAGES
@@ -69,23 +71,31 @@
   }
 
   function slideMoveLeft(currentImageIndex, previousImageIndex) {
-    elImageArray[currentImageIndex].dataset.active = false;
-    elImageArray[currentImageIndex].className = 'image middle-to-right';
+    slideToImage(currentImageIndex, previousImageIndex);
+    elImageArray[currentImageIndex].classList.add('middle-to-right');
     elImageArray[currentImageIndex].addEventListener('animationend', (e) => endOfAnimation(e));
 
-    elImageArray[previousImageIndex].dataset.active = true;
-    elImageArray[previousImageIndex].classList.remove('invisible-image', 'middle-to-right');
     elImageArray[previousImageIndex].classList.add('left-to-middle');
   }
 
   function slideMoveRight(currentImageIndex, nextImageIndex) {
-    elImageArray[currentImageIndex].dataset.active = false;
-    elImageArray[currentImageIndex].className = 'image middle-to-left';
+    slideToImage(currentImageIndex, nextImageIndex);
+    elImageArray[currentImageIndex].classList.add('middle-to-left');
     elImageArray[currentImageIndex].addEventListener('animationend', (e) => endOfAnimation(e));
 
-    elImageArray[nextImageIndex].dataset.active = true;
-    elImageArray[nextImageIndex].classList.remove('invisible-image', 'middle-to-left');
     elImageArray[nextImageIndex].classList.add('right-to-middle');
+  }
+
+  function slideToImage(currentImageIndex, targetIndex) {
+    console.log(`Moving from ${currentImageIndex} to ${targetIndex}`);
+    elImageArray[currentImageIndex].dataset.active = false;
+    elImageArray[targetIndex].dataset.active = true;
+
+    elImageArray[currentImageIndex].className = 'image invisible-image';
+    elImageArray[targetIndex].className = 'image';
+
+    elNavigationArray[currentImageIndex].dataset.active = false;
+    elNavigationArray[targetIndex].dataset.active = true;
   }
 
   function getCurrentImageIndex() {
@@ -132,6 +142,21 @@
     elImageArray[0].classList.remove('invisible-image');
   }
 
+  function displayNavigation() {
+    elNavigation.innerHTML = '';
+
+    for (let i = 0; i < elImageArray.length; i++) {
+      const elButton = elNavigation.appendChild(document.createElement('button'));
+      elButton.addEventListener('click', () => slideToImage(getCurrentImageIndex(), i));
+      elButton.classList.add('navigation-button');
+      if (i === 0) {
+        elButton.dataset.active = true;
+      } else {
+        elButton.dataset.active = false;
+      }
+      elNavigationArray.push(elButton);
+    }
+  }
 
 
 })();
