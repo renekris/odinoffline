@@ -37,8 +37,15 @@ ul > li {
 .form label {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  text-align: start;
+  text-align: end;
   margin: 0.4rem 0;
+}
+
+.error {
+  grid-area: 2 / 2 / 3 / 3;
+  color: red;
+  text-align: start;
+  font-size: 0.9rem;
 }
 
 .form button {
