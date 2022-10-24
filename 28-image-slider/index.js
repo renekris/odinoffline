@@ -46,22 +46,22 @@
 
   function createImages() {
     createImage(
-      'https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-HD-Image-Nature-620x349.jpg',
-      'Beach',
-      'Picture of a beach',
+      'https://wallpapercave.com/wp/wp9160759.jpg',
+      'Forest',
+      'Picture of a forest',
     );
     createImage(
-      'https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-HD-Image-Nature-Desktop.jpg',
+      'https://www.pixel4k.com/wp-content/uploads/2018/10/crops-sunset-lake-4k_1540131385.jpg',
       'Nature',
       'Image of nature',
     );
     createImage(
-      'https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-HD-Image-Nature-Download-620x349.jpg',
-      'Rocks on the beach',
-      'Picture of rocks',
+      'https://wallpapercave.com/wp/wp9161057.jpg',
+      'Night',
+      'Night',
     );
     createImage(
-      'https://www.pixelstalk.net/wp-content/uploads/2016/07/Desktop-hd-wallpaper-nature-1080p-620x349.jpg',
+      'https://www.pixel4k.com/wp-content/uploads/2019/03/mountains-landscape-dark-nature-4k_1551643707.jpg.webp',
       'Mountains',
       'Picture of mountains',
     );
