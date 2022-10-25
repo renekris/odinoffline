@@ -13,23 +13,18 @@
   elForm.addEventListener('submit', submitData);
 
   const elEmail = document.getElementById('email');
-  elEmail.addEventListener('invalid', () => check().email(elEmail));
   elEmail.addEventListener('blur', () => check().email(elEmail));
 
   const elCountry = document.getElementById('country');
-  elCountry.addEventListener('invalid', () => check().country(elCountry));
   elCountry.addEventListener('blur', () => check().country(elCountry));
 
   const elZip = document.getElementById('zip');
-  elZip.addEventListener('invalid', () => check().zip(elZip));
   elZip.addEventListener('blur', () => check().zip(elZip));
 
   const elPassword = document.getElementById('password');
-  elPassword.addEventListener('invalid', () => check().password(elPassword));
   elPassword.addEventListener('blur', () => check().password(elPassword));
 
   const elPasswordConfirm = document.getElementById('password-confirm');
-  elPasswordConfirm.addEventListener('invalid', () => check().passwordConfirm(elPasswordConfirm));
   elPasswordConfirm.addEventListener('blur', () => check().passwordConfirm(elPasswordConfirm));
 
   let enteredData = {};
@@ -40,15 +35,19 @@
     console.log(enteredData);
 
     // using return so it would only check once and not more then that
-    if (check().validity(check().email(elEmail))) return;
-    if (check().validity(check().country(elCountry))) return;
-    if (check().validity(check().zip(elZip))) return;
-    if (check().validity(check().password(elPassword))) return;
-    if (check().validity(check().passwordConfirm(elPasswordConfirm))) return;
+    check().email(elEmail);
+    check().country(elCountry);
+    check().zip(elZip);
+    check().password(elPassword);
+    check().passwordConfirm(elPasswordConfirm);
 
 
     if (e.target.checkValidity()) {
       console.log('EVERYTHING IS CORRECT');
+      const elCorrectSpan = elForm.appendChild(document.createElement('span'));
+      elCorrectSpan.className = 'correct';
+      elCorrectSpan.textContent = 'Data sent to imaginary server';
+      document.querySelector('button[type="submit"]').disabled = true;
     }
   }
 
@@ -57,74 +56,90 @@
     enteredData = new EnteredData(...Array.from(elForm));
   }
 
+  function createError(message) {
+    const elSpan = document.createElement('span');
+    elSpan.textContent = message;
+    elSpan.className = 'error';
+    return elSpan;
+  }
+
+  function displayErrorCheck(validityError, element) {
+    if (validityError === '') {
+      element.parentElement.children[1]?.remove();
+    } else if (!isClassNameIncluded(element.parentElement, 'error')) {
+      element.parentElement.append(createError(validityError));
+    }
+  }
+
+  function isClassNameIncluded(parentElement, className) {
+    for (let i = 0; i < parentElement.children.length; i++) {
+      if (parentElement.children[i].className === className) {
+        return true
+      }
+    }
+    return false;
+  }
+
   function check() {
     updateEnteredData();
 
     function email(element) {
+      let validityError = '';
       if (element.value === "") {
-        element.setCustomValidity('Please enter your email');
+        validityError = 'Please enter your email';
       } else if (element.validity.typeMismatch) {
-        element.setCustomValidity('Incorrect format');
-      } else {
-        element.setCustomValidity('');
+        validityError = 'Incorrect format';
       }
+      displayErrorCheck(validityError, element);
+      element.setCustomValidity(validityError);
 
       return element;
     }
 
     function country(element) {
+      let validityError = '';
       if (element.value === "") {
-        element.setCustomValidity('Please enter your country');
-      } else {
-        element.setCustomValidity('');
+        validityError = 'Please enter your country';
       }
-
+      displayErrorCheck(validityError, element);
+      element.setCustomValidity(validityError);
       return element;
     }
 
     function zip(element) {
+      let validityError = '';
       if (element.value === "") {
-        element.setCustomValidity('Please enter your zip');
+        validityError = 'Please enter your zip';
       } else if (!element.value.match(/[0-9]{5}/)) {
-        element.setCustomValidity('Follow this format [0-9]{5}');
-      } else {
-        element.setCustomValidity('');
+        validityError = 'Follow this format [0-9]{5}';
       }
-
+      displayErrorCheck(validityError, element);
+      element.setCustomValidity(validityError);
       return element;
     }
 
     function password(element) {
+      let validityError = '';
       if (element.value === "") {
-        element.setCustomValidity('Please enter your password');
+        validityError = 'Please enter your password';
       } else if (!element.value.match(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)) {
-        element.setCustomValidity('Password has to have UpperCase, LowerCase, Number/SpecialChar and min 8 Chars');
-      } else {
-        element.setCustomValidity('');
+        validityError = 'Password has to have UpperCase, LowerCase, Number/SpecialChar and min 8 Chars';
       }
-
+      displayErrorCheck(validityError, element);
+      element.setCustomValidity(validityError);
       return element;
     }
 
     function passwordConfirm(element) {
+      let validityError = '';
       if (element.value === "") {
-        element.setCustomValidity('Entered value has to be equal to password');
+        validityError = 'Entered value has to be equal to password';
       } else if (enteredData.password !== enteredData.passwordConfirm) {
-        element.setCustomValidity('Make sure the passwords are the same in both of the fields');
-      } else {
-        element.setCustomValidity('');
+        validityError = 'Make sure the passwords are the same in both of the fields';
       }
-
+      displayErrorCheck(validityError, element);
+      element.setCustomValidity(validityError);
       return element;
-    }
-
-    function validity(element) {
-      if (!element.checkValidity()) {
-        element.reportValidity();
-        return true;
-      } else {
-        return false;
-      }
     }
 
     return {
@@ -133,7 +148,6 @@
       zip,
       password,
       passwordConfirm,
-      validity
     }
   }
 

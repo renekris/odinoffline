@@ -51,3 +51,8 @@ ul > li {
 .form button {
   margin-top: 1.5rem;
 }
+
+.form > .correct {
+  text-align: center;
+  margin: 1rem;
+}
