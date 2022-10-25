@@ -41,6 +41,11 @@ ul > li {
   margin: 0.4rem 0;
 }
 
+.form input:invalid {
+  background-color: darkred;
+  color: white;
+}
+
 .error {
   grid-area: 2 / 2 / 3 / 3;
   color: red;
