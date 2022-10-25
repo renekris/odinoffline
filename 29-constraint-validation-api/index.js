@@ -64,20 +64,11 @@
   }
 
   function displayErrorCheck(validityError, element) {
+    element.parentElement.children[1]?.remove();
+    element.parentElement.append(createError(validityError));
     if (validityError === '') {
       element.parentElement.children[1]?.remove();
-    } else if (!isClassNameIncluded(element.parentElement, 'error')) {
-      element.parentElement.append(createError(validityError));
     }
-  }
-
-  function isClassNameIncluded(parentElement, className) {
-    for (let i = 0; i < parentElement.children.length; i++) {
-      if (parentElement.children[i].className === className) {
-        return true
-      }
-    }
-    return false;
   }
 
   function check() {
@@ -85,7 +76,7 @@
 
     function email(element) {
       let validityError = '';
-      if (element.value === "") {
+      if (element.value === '') {
         validityError = 'Please enter your email';
       } else if (element.validity.typeMismatch) {
         validityError = 'Incorrect format';
@@ -98,7 +89,7 @@
 
     function country(element) {
       let validityError = '';
-      if (element.value === "") {
+      if (element.value === '') {
         validityError = 'Please enter your country';
       }
       displayErrorCheck(validityError, element);
@@ -108,10 +99,10 @@
 
     function zip(element) {
       let validityError = '';
-      if (element.value === "") {
+      if (element.value === '') {
         validityError = 'Please enter your zip';
-      } else if (!element.value.match(/[0-9]{5}/)) {
-        validityError = 'Follow this format [0-9]{5}';
+      } else if (!element.value.match(/^[0-9]{5}$/)) {
+        validityError = 'Format has to be #####';
       }
       displayErrorCheck(validityError, element);
       element.setCustomValidity(validityError);
@@ -120,10 +111,10 @@
 
     function password(element) {
       let validityError = '';
-      if (element.value === "") {
+      if (element.value === '') {
         validityError = 'Please enter your password';
       } else if (!element.value.match(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)) {
-        validityError = 'Password has to have UpperCase, LowerCase, Number/SpecialChar and min 8 Chars';
+        validityError = 'Password has to have upperCase, lowerCase, number/special character and min 8 characters';
       }
       displayErrorCheck(validityError, element);
       element.setCustomValidity(validityError);
@@ -132,7 +123,7 @@
 
     function passwordConfirm(element) {
       let validityError = '';
-      if (element.value === "") {
+      if (element.value === '') {
         validityError = 'Entered value has to be equal to password';
       } else if (enteredData.password !== enteredData.passwordConfirm) {
         validityError = 'Make sure the passwords are the same in both of the fields';
