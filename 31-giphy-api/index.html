@@ -12,35 +12,45 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     "
   >
-    <img class="target" src="#" alt="api image" style="width: 50%" />
+    <img class="target" src="#" alt="api gif" style="width: 50%" />
     <p class="title"></p>
+    <button id="refresh">Fetch a new gif!</button>
 
     <script>
       const elImage = document.querySelector(".target");
       const elPara = document.querySelector(".title");
-      let jsonResponse = "";
+      let jsonData = "";
+
+      document.addEventListener("DOMContentLoaded", requestImage);
+
+      document
+        .getElementById("refresh")
+        .addEventListener("click", requestImage);
 
       // using free api key, so leaving it unsecured
-      fetch(
-        "https://api.giphy.com/v1/gifs/translate?s=cat&api_key=Za55Dgo4rASxPI8mQZZBrmXBMmYG94p4",
-        { mode: "cors" }
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          elImage.src = response.data.images.original.url;
-          elPara.textContent = response.data.title;
-          jsonResponse = response;
-        })
-        .catch((error) => {
-          throw error;
-        })
-        .finally(() => {
-          console.log(jsonResponse);
-        });
+      function requestImage() {
+        fetch(
+          "https://api.giphy.com/v1/gifs/translate?s=cat&api_key=Za55Dgo4rASxPI8mQZZBrmXBMmYG94p4",
+          { mode: "cors" }
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((response) => {
+            elImage.src = response.data.images.original.url;
+            elPara.textContent = response.data.title;
+            jsonData = response;
+          })
+          .catch((error) => {
+            throw error;
+          })
+          .finally(() => {
+            console.log(jsonData);
+          });
+      }
     </script>
   </body>
 </html>
