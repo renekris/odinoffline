@@ -17,23 +17,31 @@
   >
     <img class="target" src="#" alt="api gif" style="width: 50%" />
     <p class="title"></p>
+    <input
+      id="search"
+      type="text"
+      style="margin-bottom: 1rem"
+      value="cat"
+      placeholder="Search..."
+    />
     <button id="refresh">Fetch a new gif!</button>
 
     <script>
       const elImage = document.querySelector(".target");
       const elPara = document.querySelector(".title");
+      const elSearch = document.getElementById("search");
       let jsonData = "";
 
-      document.addEventListener("DOMContentLoaded", requestImage);
+      document.addEventListener("DOMContentLoaded", () => requestImage("cat"));
 
       document
         .getElementById("refresh")
-        .addEventListener("click", requestImage);
+        .addEventListener("click", () => requestImage(elSearch.value));
 
       // using free api key, so leaving it unsecured
-      function requestImage() {
+      function requestImage(searchValue = "") {
         fetch(
-          "https://api.giphy.com/v1/gifs/translate?s=cat&api_key=Za55Dgo4rASxPI8mQZZBrmXBMmYG94p4",
+          `https://api.giphy.com/v1/gifs/translate?s=${searchValue}&api_key=Za55Dgo4rASxPI8mQZZBrmXBMmYG94p4`,
           { mode: "cors" }
         )
           .then((response) => {
@@ -45,6 +53,8 @@
             jsonData = response;
           })
           .catch((error) => {
+            elImage.src =
+              "https://64.media.tumblr.com/cc39c877bfc3ea18f91e76b73504fd4a/tumblr_mlitggNY5M1rsdpaso1_500.gifv";
             throw error;
           })
           .finally(() => {
