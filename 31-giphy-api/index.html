@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API</title>
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <img class="target" src="#" alt="api image" style="width: 50%" />
+    <p class="title"></p>
+
+    <script>
+      const elImage = document.querySelector(".target");
+      const elPara = document.querySelector(".title");
+      let jsonResponse = "";
+
+      // using free api key, so leaving it unsecured
+      fetch(
+        "https://api.giphy.com/v1/gifs/translate?s=cat&api_key=Za55Dgo4rASxPI8mQZZBrmXBMmYG94p4",
+        { mode: "cors" }
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          elImage.src = response.data.images.original.url;
+          elPara.textContent = response.data.title;
+          jsonResponse = response;
+        })
+        .catch((error) => {
+          throw error;
+        })
+        .finally(() => {
+          console.log(jsonResponse);
+        });
+    </script>
+  </body>
+</html>
