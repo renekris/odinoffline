@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API</title>
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    "
+  >
+    <img class="target" src="#" alt="api gif" style="width: 50%" />
+    <p class="title"></p>
+    <input
+      id="search"
+      type="text"
+      style="margin-bottom: 1rem"
+      value="cat"
+      placeholder="Search..."
+    />
+    <button id="refresh">Fetch a new gif!</button>
+
+    <script>
+      const elImage = document.querySelector(".target");
+      const elPara = document.querySelector(".title");
+      const elSearch = document.getElementById("search");
+      let jsonData = "";
+
+      document.addEventListener("DOMContentLoaded", () => requestImage("cat"));
+
+      document
+        .getElementById("refresh")
+        .addEventListener("click", () => requestImage(elSearch.value));
+
+      async function requestImage(searchValue = "") {
+        try {
+          // using free api key, so leaving it unsecured
+          const fetchedResponse = await fetch(
+            `https://api.giphy.com/v1/gifs/translate?s=${searchValue}&api_key=Za55Dgo4rASxPI8mQZZBrmXBMmYG94p4`,
+            { mode: "cors" }
+          );
+          const responseData = await fetchedResponse.json();
+
+          elImage.src = responseData.data.images.original.url;
+          elPara.textContent = responseData.data.title;
+        } catch (error) {
+          elImage.src =
+            "https://64.media.tumblr.com/cc39c877bfc3ea18f91e76b73504fd4a/tumblr_mlitggNY5M1rsdpaso1_500.gifv";
+          throw error;
+        }
+      }
+    </script>
+  </body>
+</html>
