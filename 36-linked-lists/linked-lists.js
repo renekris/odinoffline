@@ -24,8 +24,8 @@ class LinkedList {
     if (this.head === undefined) return 0;
 
     let nth = 0;
-    this.#iterateNodes(() => {
-      nth += 1;
+    this.#iterateNodes((node, count) => {
+      nth = count;
     });
     return nth;
   }
@@ -54,14 +54,12 @@ class LinkedList {
   }
 
   at(index) {
-    let count = 0
     let nodeAtIndex;
-    this.#iterateNodes((node) => {
+    this.#iterateNodes((node, count) => {
       if (count === index) {
         nodeAtIndex = node;
         return true;
       }
-      count += 1;
     });
 
     return nodeAtIndex;
@@ -115,13 +113,11 @@ class LinkedList {
     if (this.head === undefined) return this.head;
 
     let index = null;
-    let count = 0;
-    this.#iterateNodes((node) => {
+    this.#iterateNodes((node, count) => {
       if (node.data === value) {
         index = count;
         return true;
       }
-      count += 1;
     });
 
     return index;
@@ -144,10 +140,9 @@ class LinkedList {
   insertAt(value, index) {
     if (this.head === undefined) return this.head;
 
-    let count = 0;
     let nodeChain = null;
     const newNode = this.#createNode(value);
-    this.#iterateNodes((node) => {
+    this.#iterateNodes((node, count) => {
       if (index === 0) {
         newNode.next = this.head;
         this.head = newNode;
@@ -160,7 +155,6 @@ class LinkedList {
         nodeChain = node;
         return true;
       }
-      count += 1;
     });
 
     return nodeChain;
@@ -169,9 +163,8 @@ class LinkedList {
   removeAt(index) {
     if (this.head === undefined) return this.head;
 
-    let count = 0;
     let removedNode;
-    this.#iterateNodes((node) => {
+    this.#iterateNodes((node, count) => {
       if (index === 0) {
         removedNode = this.head;
         this.head = this.head.next;
@@ -182,7 +175,6 @@ class LinkedList {
         node.next = node.next.next;
         return true;
       }
-      count += 1;
     });
 
     return removedNode;
@@ -190,10 +182,12 @@ class LinkedList {
 
   #iterateNodes(callback) {
     let currentPointer = this.head;
+    let count = 0;
     while (currentPointer !== null) {
-      const canBreakLoop = callback(currentPointer) || false;
+      const canBreakLoop = callback(currentPointer, count) || false;
       if (canBreakLoop) break;
 
+      count += 1;
       currentPointer = currentPointer.next;
     }
   }
