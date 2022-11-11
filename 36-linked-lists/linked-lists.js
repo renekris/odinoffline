@@ -11,10 +11,11 @@ class LinkedList {
 
     let tailNode = this.head;
     this.#iterateNodes((node) => {
-      if (node.next === null || undefined) {
+      if (node.next === null) {
         tailNode = node;
+        return true;
       }
-    })
+    });
 
     return tailNode;
   }
@@ -52,10 +53,40 @@ class LinkedList {
     return this.head;
   }
 
+  at(index) {
+    let count = 0
+    let nodeAtIndex;
+    this.#iterateNodes((node) => {
+      if (count === index) {
+        nodeAtIndex = node;
+        return true;
+      }
+      count += 1;
+    });
+
+    return nodeAtIndex;
+  }
+
+  pop() {
+    if (this.head === undefined) return this.head;
+    let poppedNode = null;
+    this.#iterateNodes((node) => {
+      if (node.next === null) {
+        return true;
+      } else if (node.next.next === null) {
+        poppedNode = node.next;
+        node.next = null;
+      }
+    });
+    return poppedNode;
+  }
+
   #iterateNodes(callback) {
     let currentPointer = this.head;
     while (currentPointer !== null) {
-      callback(currentPointer);
+      const canBreakLoop = callback(currentPointer) || false;
+      if (canBreakLoop) break;
+
       currentPointer = currentPointer.next;
     }
   }
@@ -75,22 +106,29 @@ class Node {
 
 const list = new LinkedList();
 
-console.log(list.size);
+console.log('Current size:', list.size);
+console.log('Popped:', list.pop());
 list.prepend('-1');
 list.append('0');
 list.append('1');
-console.log(list.head);
+console.log('Current head:', list.head);
 list.append('2');
-console.log(list.tail);
+console.log('Current tail:', list.tail);
 list.append('3');
 list.prepend('-2');
-console.log(list.head);
+console.log('Current head:', list.head);
 list.append('4');
-console.log(list.tail);
+console.log('Node @ 2:', list.at(2));
+console.log('Current tail:', list.tail);
 list.append('5');
+console.log('Node @ 0:', list.at(0));
 list.prepend('-3');
+console.log('Node @ 0:', list.at(0));
+console.log('Current size:', list.size);
 list.append('6');
 list.append('7');
-console.log(list.head);
-console.log(list.tail);
-console.log(list.size);
+console.log('Node @ 5:', list.at(5));
+console.log('Current head:', list.head);
+console.log('Current tail:', list.tail);
+console.log('Popped:', list.pop());
+console.log('Current tail:', list.tail);
