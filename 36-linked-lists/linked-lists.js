@@ -79,6 +79,7 @@ class LinkedList {
         node.next = null;
       }
     });
+
     return poppedNode;
   }
 
@@ -124,6 +125,67 @@ class LinkedList {
     });
 
     return index;
+  }
+
+  toString() {
+    if (this.head === undefined) return this.head;
+
+    let string = '';
+    this.#iterateNodes((node) => {
+      if (node !== null) {
+        string = `${string}( ${node.data} ) -> `;
+      }
+    });
+
+    string = `${string}null`;
+    return string;
+  }
+
+  insertAt(value, index) {
+    if (this.head === undefined) return this.head;
+
+    let count = 0;
+    let nodeChain = null;
+    const newNode = this.#createNode(value);
+    this.#iterateNodes((node) => {
+      if (index === 0) {
+        newNode.next = this.head;
+        this.head = newNode;
+        nodeChain = node;
+        return true;
+      } else if (index - 1 === count) {
+        // Using index - 1 to remove the 'next' node from a n-1 node
+        newNode.next = node.next;
+        node.next = newNode;
+        nodeChain = node;
+        return true;
+      }
+      count += 1;
+    });
+
+    return nodeChain;
+  }
+
+  removeAt(index) {
+    if (this.head === undefined) return this.head;
+
+    let count = 0;
+    let removedNode;
+    this.#iterateNodes((node) => {
+      if (index === 0) {
+        removedNode = this.head;
+        this.head = this.head.next;
+        return true;
+      } else if (index - 1 === count) {
+        // Using index - 1 to remove the 'next' node from a n-1 node
+        removedNode = node.next;
+        node.next = node.next.next;
+        return true;
+      }
+      count += 1;
+    });
+
+    return removedNode;
   }
 
   #iterateNodes(callback) {
@@ -180,3 +242,14 @@ console.log('Current tail:', list.tail);
 console.log('Checks if list contains string "4":', list.contains('4'));
 console.log('Find node with value "2":', list.findNode('2'));
 console.log('Find index with value "5":', list.findIndex('5'));
+console.log(list.toString());
+console.log(list.insertAt('Inserted @ index 3 first', 3));
+console.log(list.toString());
+console.log(list.insertAt('Inserted @ index 1 second', 1));
+console.log(list.toString());
+console.log(list.insertAt('Inserted @ index 0 third', 0));
+console.log(list.toString());
+console.log('Remove index 5', list.removeAt(5));
+console.log('Remove index 0', list.removeAt(0));
+console.log(list.toString());
+
