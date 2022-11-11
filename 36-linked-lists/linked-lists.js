@@ -69,6 +69,7 @@ class LinkedList {
 
   pop() {
     if (this.head === undefined) return this.head;
+
     let poppedNode = null;
     this.#iterateNodes((node) => {
       if (node.next === null) {
@@ -79,6 +80,50 @@ class LinkedList {
       }
     });
     return poppedNode;
+  }
+
+  contains(value) {
+    if (this.head === undefined) return this.head;
+
+    let hasValue = false;
+    this.#iterateNodes((node) => {
+      if (node.data === value) {
+        hasValue = true;
+        return true;
+      }
+    });
+
+    return hasValue;
+  }
+
+  findNode(value) {
+    if (this.head === undefined) return this.head;
+
+    let data = null;
+    this.#iterateNodes((node) => {
+      if (node.data === value) {
+        data = node;
+        return true;
+      }
+    });
+
+    return data;
+  }
+
+  findIndex(value) {
+    if (this.head === undefined) return this.head;
+
+    let index = null;
+    let count = 0;
+    this.#iterateNodes((node) => {
+      if (node.data === value) {
+        index = count;
+        return true;
+      }
+      count += 1;
+    });
+
+    return index;
   }
 
   #iterateNodes(callback) {
@@ -132,3 +177,6 @@ console.log('Current head:', list.head);
 console.log('Current tail:', list.tail);
 console.log('Popped:', list.pop());
 console.log('Current tail:', list.tail);
+console.log('Checks if list contains string "4":', list.contains('4'));
+console.log('Find node with value "2":', list.findNode('2'));
+console.log('Find index with value "5":', list.findIndex('5'));
