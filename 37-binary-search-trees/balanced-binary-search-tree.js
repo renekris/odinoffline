@@ -136,6 +136,24 @@ class Tree {
     this.root = this.buildTree([...new Set(orderArray)].sort(this.#sortArray));
   }
 
+  isBalanced(root = this.root) {
+    if (root === null) {
+      return true;
+    }
+
+    const leftHeight = this.height(root.left);
+    const rightHeight = this.height(root.right);
+
+    if (
+      Math.abs(leftHeight - rightHeight) <= 1
+      && this.isBalanced(root.left) === true
+      && this.isBalanced(root.right) === true
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   #preOrderRec(callback = null, root = this.root, array = []) {
     if (root === null) return null;
 
@@ -272,4 +290,6 @@ console.log(`Height is:`, tree.height(tree.find(4)));
 
 // Depth is defined as the number of edges in path from a given node to the tree’s root node.
 console.log(`Depth is:`, tree.depth(tree.find(6345)));
+
+console.log(tree.isBalanced());
 
