@@ -32,10 +32,46 @@ class Tree {
   }
 
   insert(value) {
-    // const hasValue = this.#contains(this.root, value);
     this.root = this.#insertRec(this.root, value);
-    // if (!hasValue) {
-    // }
+    return this.root;
+  }
+
+  delete(value) {
+    this.root = this.#deleteRec(this.root, value);
+    return this.root;
+  }
+
+  find(value) {
+    return this.#findRec(this.root, value);
+  }
+
+  #minValue(root) {
+    let minValue = root.data;
+    while (root.left !== null) {
+      minValue = root.left.data;
+      root = root.left;
+    }
+    return minValue;
+  }
+
+  #deleteRec(root, value) {
+    if (root === null) return root;
+
+    if (value < root.data) {
+      root.left = this.#deleteRec(root.left, value);
+    } else if (value > root.data) {
+      root.right = this.#deleteRec(root.right, value);
+    } else {
+      if (root.left === null) {
+        return root.right;
+      } else if (root.right === null) {
+        return root.left;
+      }
+
+      root.data = this.#minValue(root.right);
+      root.right = this.#deleteRec(root.right, root.data);
+    }
+    return root;
   }
 
   #insertRec(root, value) {
@@ -53,20 +89,20 @@ class Tree {
     return root;
   }
 
-  #search(root, key) {
-    if (root === null || root.data === key) {
+  #findRec(root, value) {
+    if (root === null || root.data === value) {
       return root;
     }
 
-    if (root.data < key) {
-      return this.#search(root.right, key);
+    if (root.data < value) {
+      return this.#findRec(root.right, value);
     }
 
-    return this.#search(root.left, key);
+    return this.#findRec(root.left, value);
   }
 
-  #contains(root, key) {
-    const result = this.#search(root, key);
+  #contains(value) {
+    const result = this.find(value);
     if (result === null) {
       return false;
     } else {
@@ -96,5 +132,7 @@ const arrayTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const tree = new Tree(array);
 tree.insert(55);
 tree.insert(42);
+tree.delete(5);
 tree.insert(10);
 prettyPrint(tree.root);
+console.log(tree.find(1));
