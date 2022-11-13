@@ -130,6 +130,12 @@ class Tree {
     }
   }
 
+  reBalance() {
+    const orderArray = [];
+    this.inOrder((node) => { orderArray.push(node.data) });
+    this.root = this.buildTree([...new Set(orderArray)].sort(this.#sortArray));
+  }
+
   #preOrderRec(callback = null, root = this.root, array = []) {
     if (root === null) return null;
 
@@ -246,10 +252,16 @@ const arrayTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const tree = new Tree(array);
 tree.insert(55);
 tree.insert(42);
+tree.insert(5291);
 tree.delete(5);
 tree.insert(10);
+tree.insert(44);
+tree.delete(8);
+tree.insert(22);
+tree.insert(2);
+tree.reBalance();
 prettyPrint(tree.root);
-console.log(tree.find(1));
+// console.log(tree.find(1));
 // tree.levelOrder(((value) => console.log(`Value:`, value.data)));
 // tree.preOrder(((value) => console.log(`Value:`, value.data)));
 // tree.inOrder(((value) => console.log(`Value:`, value.data)));
@@ -260,3 +272,4 @@ console.log(`Height is:`, tree.height(tree.find(4)));
 
 // Depth is defined as the number of edges in path from a given node to the tree’s root node.
 console.log(`Depth is:`, tree.depth(tree.find(6345)));
+
