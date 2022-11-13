@@ -45,6 +45,32 @@ class Tree {
     return this.#findRec(this.root, value);
   }
 
+  levelOrder(callback = null) {
+    let queue = [];
+    let array = [];
+
+    queue.push(this.root);
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (callback !== null) {
+        callback(current);
+      } else {
+        array.push(current);
+      }
+
+      if (current.left !== null) {
+        queue.push(current.left);
+      }
+      if (current.right !== null) {
+        queue.push(current.right);
+      }
+    }
+
+    if (array.length > 0) {
+      return array;
+    }
+  }
+
   #minValue(root) {
     let minValue = root.data;
     while (root.left !== null) {
@@ -103,11 +129,7 @@ class Tree {
 
   #contains(value) {
     const result = this.find(value);
-    if (result === null) {
-      return false;
-    } else {
-      return true;
-    }
+    return result === null ? false : true;
   }
 
   #sortArray(a, b) {
@@ -129,10 +151,12 @@ function prettyPrint(node, prefix = '', isLeft = true) {
 
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arrayTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const tree = new Tree(array);
+const tree = new Tree(arrayTwo);
 tree.insert(55);
 tree.insert(42);
 tree.delete(5);
 tree.insert(10);
 prettyPrint(tree.root);
 console.log(tree.find(1));
+tree.levelOrder(((value) => console.log(`Value:`, value)));
+// console.log(tree.levelOrder());
