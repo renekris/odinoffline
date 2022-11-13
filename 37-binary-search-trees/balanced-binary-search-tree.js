@@ -66,9 +66,52 @@ class Tree {
       }
     }
 
-    if (array.length > 0) {
-      return array;
-    }
+    return array;
+  }
+
+  preOrder(callback) {
+    return this.#preOrderRec(callback);
+  }
+
+  inOrder(callback) {
+    return this.#inOrderRec(callback);
+  }
+
+  postOrder(callback) {
+    return this.#postOrderRec(callback);
+  }
+
+  #preOrderRec(callback = null, root = this.root, array = []) {
+    if (root === null) return null;
+
+    if (callback !== null) callback(root);
+    else array.push(root);
+    this.#preOrderRec(callback, root.left, array);
+    this.#preOrderRec(callback, root.right, array);
+
+    return array;
+  }
+
+  #inOrderRec(callback = null, root = this.root, array = []) {
+    if (root === null) return null;
+
+    this.#inOrderRec(callback, root.left, array);
+    if (callback !== null) callback(root);
+    else array.push(root);
+    this.#inOrderRec(callback, root.right, array);
+
+    return array;
+  }
+
+  #postOrderRec(callback = null, root = this.root, array = []) {
+    if (root === null) return null;
+
+    this.#postOrderRec(callback, root.left, array);
+    this.#postOrderRec(callback, root.right, array);
+    if (callback !== null) callback(root);
+    else array.push(root);
+
+    return array;
   }
 
   #minValue(root) {
@@ -158,5 +201,7 @@ tree.delete(5);
 tree.insert(10);
 prettyPrint(tree.root);
 console.log(tree.find(1));
-tree.levelOrder(((value) => console.log(`Value:`, value)));
-// console.log(tree.levelOrder());
+// tree.levelOrder(((value) => console.log(`Value:`, value.data)));
+// tree.preOrder(((value) => console.log(`Value:`, value.data)));
+// tree.inOrder(((value) => console.log(`Value:`, value.data)));
+// tree.postOrder(((value) => console.log(`Value:`, value.data)));
