@@ -81,6 +81,55 @@ class Tree {
     return this.#postOrderRec(callback);
   }
 
+  height(node = this.root) {
+    if (node === null) {
+      return 0;
+    }
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+
+  depth(node = this.root) {
+    let depth = 2; // index0 = 1 AND order of operations = 1
+    let queue = [];
+    let isFound = false;
+
+    queue.push(this.root);
+    queue.push(null);
+    while (queue.length > 0) {
+      let current = queue.shift();
+      if (current === null) {
+        depth += 1;
+      }
+
+      if (current !== null) {
+        if (current.left) {
+          if (current.left === node) {
+            isFound = true;
+            break;
+          }
+          queue.push(current.left);
+        }
+        if (current.right) {
+          if (current.right === node) {
+            isFound = true;
+            break;
+          }
+          queue.push(current.right);
+        }
+      } else if (queue.length > 0) {
+        queue.push(null);
+      }
+    }
+    if (isFound) {
+      return depth;
+    } else {
+      return 0;
+    }
+  }
+
   #preOrderRec(callback = null, root = this.root, array = []) {
     if (root === null) return null;
 
@@ -194,7 +243,7 @@ function prettyPrint(node, prefix = '', isLeft = true) {
 
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arrayTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const tree = new Tree(arrayTwo);
+const tree = new Tree(array);
 tree.insert(55);
 tree.insert(42);
 tree.delete(5);
@@ -205,3 +254,9 @@ console.log(tree.find(1));
 // tree.preOrder(((value) => console.log(`Value:`, value.data)));
 // tree.inOrder(((value) => console.log(`Value:`, value.data)));
 // tree.postOrder(((value) => console.log(`Value:`, value.data)));
+
+// Height is defined as the number of edges in longest path from a given node to a leaf node.
+console.log(`Height is:`, tree.height(tree.find(4)));
+
+// Depth is defined as the number of edges in path from a given node to the tree’s root node.
+console.log(`Depth is:`, tree.depth(tree.find(6345)));
