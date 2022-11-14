@@ -287,28 +287,37 @@ function randomArray(amount = Math.floor(Math.random() * 1000) + 1) {
 
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arrayTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const tree = new Tree(randomArray());
-tree.insert(randomArray(50));
-tree.insert(randomArray(50));
-tree.delete(5);
-tree.insert(randomArray(50));
+const tree = new Tree(randomArray(10));
+
 if (!tree.isBalanced()) {
-  // tree.reBalance();
+  tree.reBalance();
   console.log(`Tree rebalanced`);
 }
+
 tree.prettyPrint();
 tree.levelOrder(((value) => console.log(`Value:`, value.data)));
 tree.preOrder(((value) => console.log(`Value:`, value.data)));
 tree.inOrder(((value) => console.log(`Value:`, value.data)));
 tree.postOrder(((value) => console.log(`Value:`, value.data)));
+tree.insert(randomArray(5));
 
+if (!tree.isBalanced()) {
+  console.log('Tree is unbalanced');
+  tree.reBalance();
+  if (tree.isBalanced()) {
+    console.log('Tree is balanced');
+  }
+}
 
+tree.levelOrder(((value) => console.log(`LevelOrder value:`, value.data)));
+tree.preOrder(((value) => console.log(`PreOrder value`, value.data)));
+tree.inOrder(((value) => console.log(`InOrder value`, value.data)));
+tree.postOrder(((value) => console.log(`PostOrder value`, value.data)));
 
 // Height is defined as the number of edges in longest path from a given node to a leaf node.
-console.log(`Height is:`, tree.height());
+console.log(`Tree height is:`, tree.height());
 
 // Depth is defined as the number of edges in path from a given node to the tree’s root node.
-console.log(`Depth is:`, tree.depth());
+// console.log(`Depth is:`, tree.depth());
 
-console.log(tree.isBalanced());
-
+tree.prettyPrint();
