@@ -32,12 +32,24 @@ class Tree {
   }
 
   insert(value) {
-    this.root = this.#insertRec(this.root, value);
+    if (typeof value === 'number') {
+      this.root = this.#insertRec(this.root, value);
+    } else if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i++) {
+        this.root = this.#insertRec(this.root, value[i]);
+      }
+    }
     return this.root;
   }
 
   delete(value) {
-    this.root = this.#deleteRec(this.root, value);
+    if (typeof value === 'number') {
+      this.root = this.#deleteRec(this.root, value);
+    } else if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i++) {
+        this.root = this.#deleteRec(this.root, value[i]);
+      }
+    }
     return this.root;
   }
 
@@ -92,7 +104,7 @@ class Tree {
   }
 
   depth(node = this.root) {
-    let depth = 2; // index0 = 1 AND order of operations = 1
+    let depth = 2; // index 0 = 1 AND order of operations = 1
     let queue = [];
     let isFound = false;
 
@@ -152,6 +164,16 @@ class Tree {
       return true;
     }
     return false;
+  }
+
+  prettyPrint(node = this.root, prefix = '', isLeft = true) {
+    if (node.right !== null) {
+      this.prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+    }
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+    if (node.left !== null) {
+      this.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    }
   }
 
   #preOrderRec(callback = null, root = this.root, array = []) {
@@ -255,41 +277,38 @@ class Tree {
   }
 }
 
-function prettyPrint(node, prefix = '', isLeft = true) {
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+function randomArray(amount = Math.floor(Math.random() * 1000) + 1) {
+  let array = [];
+  while (array.length < amount) {
+    array.push(Math.floor(Math.random() * 1000000) + 1);
   }
-  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-  }
+  return array;
 }
 
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const arrayTwo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const tree = new Tree(array);
-tree.insert(55);
-tree.insert(42);
-tree.insert(5291);
+const tree = new Tree(randomArray());
+tree.insert(randomArray(50));
+tree.insert(randomArray(50));
 tree.delete(5);
-tree.insert(10);
-tree.insert(44);
-tree.delete(8);
-tree.insert(22);
-tree.insert(2);
-tree.reBalance();
-prettyPrint(tree.root);
-// console.log(tree.find(1));
-// tree.levelOrder(((value) => console.log(`Value:`, value.data)));
-// tree.preOrder(((value) => console.log(`Value:`, value.data)));
-// tree.inOrder(((value) => console.log(`Value:`, value.data)));
-// tree.postOrder(((value) => console.log(`Value:`, value.data)));
+tree.insert(randomArray(50));
+if (!tree.isBalanced()) {
+  // tree.reBalance();
+  console.log(`Tree rebalanced`);
+}
+tree.prettyPrint();
+tree.levelOrder(((value) => console.log(`Value:`, value.data)));
+tree.preOrder(((value) => console.log(`Value:`, value.data)));
+tree.inOrder(((value) => console.log(`Value:`, value.data)));
+tree.postOrder(((value) => console.log(`Value:`, value.data)));
+
+
 
 // Height is defined as the number of edges in longest path from a given node to a leaf node.
-console.log(`Height is:`, tree.height(tree.find(4)));
+console.log(`Height is:`, tree.height());
 
 // Depth is defined as the number of edges in path from a given node to the tree’s root node.
-console.log(`Depth is:`, tree.depth(tree.find(6345)));
+console.log(`Depth is:`, tree.depth());
 
 console.log(tree.isBalanced());
 
