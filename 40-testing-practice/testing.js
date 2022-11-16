@@ -33,4 +33,16 @@ function caesarCipher(value = '', shift = 0, space = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ
   return encoded.join(' ').toLowerCase();
 }
 
-export { capitalize, reverseString, calculator, caesarCipher };
+function analyzeArray(array = []) {
+  return {
+    length: array.length,
+    min: Math.min(...array),
+    max: Math.max(...array),
+    average: (() => {
+      const total = array.reduce((prev, current) => prev + current, 0);
+      return total / array.length;
+    })(),
+  }
+}
+
+export { capitalize, reverseString, calculator, caesarCipher, analyzeArray };
