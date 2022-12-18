@@ -18,6 +18,16 @@ export default class App extends Component {
         },
       ],
     }
+    this.removeTask = this.removeTask.bind(this);
+  }
+
+  removeTask(id) {
+    console.log(id);
+    if (id) {
+      this.setState((state) => ({
+        array: [...state.array.filter((value) => value.id !== id)]
+      }));
+    }
   }
 
   handleAddTask(e) {
@@ -37,7 +47,7 @@ export default class App extends Component {
 
     return (
       <div>
-        <Overview array={array} />
+        <Overview array={array} removeTask={this.removeTask} />
         <form onSubmit={(e) => this.handleAddTask(e)}>
           <input className='data-input'></input>
           <button type='submit'>Save to list!</button>
