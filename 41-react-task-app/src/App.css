@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.array {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  gap: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.array > p {
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: black;
+}
