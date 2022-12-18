@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Overview extends Component {
-  render() {
-    return (
-      <ol className='array'>
-        {
-          this.props.array.map((value, index, array) => <li key={index}>{value}</li>)
-        }
-      </ol>
-    )
-  }
+const Overview = (props) => {
+  const { array } = props;
+
+  return (
+    <ul className='array'>
+      {
+        array.map((value) => <li key={value.id}>{value.task}</li>)
+      }
+    </ul>
+  );
 }
+
+export default Overview;
