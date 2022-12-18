@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Overview = ({ array, removeTask }) => {
+const Overview = ({ array, removeTask, editTask }) => {
   return (
     <ul className='array'>
       {
@@ -10,7 +10,8 @@ const Overview = ({ array, removeTask }) => {
               <li >
                 {value.task}
               </li>
-              <button dataset-id={value.id} onClick={() => removeTask(value.id)}>X</button>
+              <button onClick={() => removeTask(value.id)}>X</button>
+              <button onClick={() => editTask(value.id)}>EDIT</button>
             </div>
           )
         })
